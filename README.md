@@ -4,6 +4,13 @@ This is an Unofficial Docker container for rclone based on freely available Linu
 
 # madcatsu/docker-rclone-cron
 
+[![Docker Version](https://images.microbadger.com/badges/version/madcatsu/docker-rclone-cron.svg)][hub]
+[![Docker Layers](https://images.microbadger.com/badges/image/madcatsu/docker-rclone-cron.svg)][hub]
+[![Docker Build](https://img.shields.io/docker/automated/tynor88/rclone.svg)][hub]
+[![Docker Build Status](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://hub.docker.com/r/madcatsu/airvideohd/builds/)
+[hub]: https://hub.docker.com/r/madcatsu/docker-rclone-cron/
+
+
 rclone for Docker - rclone provides a set of commands similar to rsync for working with Public or Private Cloud Storage providers that leverage the S3 or Swift REST API.
 
 **Cloud Services**
