@@ -105,4 +105,4 @@ The container avoids this issue by allowing users to specify an existing Docker 
 ### Versions
 
 + **2017/02/11:**
-  * Initial release
+  * Initial release and push to Docker Hub
