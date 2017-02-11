@@ -1,25 +1,29 @@
 #!/usr/bin/with-contenv sh
 
-# change crontab file
-if [[ -n "$CRON_SCHEDULE" ]]; then
-  sed -i -e 's|0 \* \* \* \*|'"$CRON_SCHEDULE"'|g' /defaults/rclone_cron
+# create empty config file and bail out, otherwise proceed and setup crond
+if [[ ! -f /config/.rclone.conf ]]; then
+  touch /config/.rclone.conf
+  echo "Warning: No rclone config was detected!"
+  echo "Warning: An empty .rclone.conf configurationfile has been placed in the /config path."
+  echo "Warning: Please run this container with the 'config' parameter to configure a destination"
+  echo "Warning: and any encryption settings you may wish to use to protect your synchronized data files."
+  exit 1
+else
+  # replace default crontab with custom if provided
+  if [[ -n "$CRON_SCHEDULE" ]]; then
+    sed -i -e 's|0 \* \* \* \*|'"$CRON_SCHEDULE"'|g' /defaults/rclone.cron
+  fi
+  echo "Info: crontab => $(cat /defaults/rclone.cron)"
+  # set crontab for our user
+  crontab -u abc /defaults/rclone.cron
 fi
 
-echo "crontab => $(cat /defaults/rclone_cron)"
-
-# set crontab
-crontab -u abc /defaults/rclone_cron
-
-# create empty config file
-touch /config/.rclone.conf
-
-# permissions
+# set permissions
 chown -R abc:abc \
 	/app
 chown abc:abc \
 	/config/.rclone.conf
 chmod +x \
-	/app/rclone.sh \
-	/config/Rclone.sh
+	/app/rclone-job.sh \
 chmod 777 \
 	/var/lock

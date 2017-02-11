@@ -30,9 +30,10 @@ Docker for Rclone - a command line program to sync files and directories to and 
 * Check mode to check for file hash equality
 * Can sync to and from network, eg two different cloud accounts
 * Optional encryption (Crypt)
-* Optional FUSE mount (rclone mount)
 
 ## Usage
+
+
 
 ```
 docker create \
@@ -51,7 +52,7 @@ docker create \
 * `-e RCLONE_CONFIG_PASS` If the rclone.conf is encrypted, specify the password here
 * `-e SYNC_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destionation (will automaticly be created if it does not exist)
 * `-e CRON_SCHEDULE` A custom cron schedule which will override the default value of: 0 * * * * (hourly)
-* `-e SYNC_COMMAND` A custom rclone command which will override the default value of: rclone sync /data $SYNC_DESTINATION:/$SYNC_DESTINATION_SUBPATH
+* `-e RCLONE_COMMAND` A custom rclone command which will override the default value of: rclone sync /data $SYNC_DESTINATION:/$SYNC_DESTINATION_SUBPATH
 
 
 ## Info

@@ -1,38 +1,43 @@
-FROM quay.io/justcontainers/base-alpine:v0.12.2
-MAINTAINER tynor88 <tynor@hotmail.com>
+FROM alpine
+MAINTAINER madcatsu
 
+# global environment settings
+ENV OVERLAY_VERSION="v1.19.1.1"
+ENV RCLONE_VERSION="current"
+ENV PLATFORM_ARCH="amd64"
 # s6 environment settings
 ENV S6_BEHAVIOUR_IF_STAGE2_FAILS=2
 ENV S6_KEEP_ENV=1
 
-# global environment settings
-ENV RCLONE_VERSION="current"
-ENV RCLONE_ARCH="amd64"
-
-# install packages
+# install base packages
 RUN \
- apk update && \
- apk add --no-cache \
- ca-certificates
+  apk update && \
+  apk add --no-cache \
+    ca-certificates \
+    curl \
+    unzip && \
+  apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community \
+    shadow && \
 
-# install build packages
+# add s6 overlay
+  curl -o \
+    /tmp/s6-overlay.tar.gz -L \
+    "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${PLATFORM_ARCH}.tar.gz" && \
+  tar xfz \
+    /tmp/s6-overlay.tar.gz -C / && \
+
+# Fetch rclone binaries
 RUN \
- apk add --no-cache --virtual=build-dependencies \
- wget \
- unzip && \
- 
- cd tmp && \
- wget -q http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${RCLONE_ARCH}.zip && \
- unzip /tmp/rclone-${RCLONE_VERSION}-linux-${RCLONE_ARCH}.zip && \
- mv /tmp/rclone-*-linux-${RCLONE_ARCH}/rclone /usr/bin && \
- 
- apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community \
-	shadow && \
- 
+  curl -o \
+    /tmp/rclone-binaries.zip -L \
+      "http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${PLATFORM_ARCH}.zip" && \
+  cd /tmp
+  unzip /tmp/rclone-${RCLONE_VERSION}-linux-${RCLONE_ARCH}.zip && \
+  mv /tmp/rclone-*-linux-${RCLONE_ARCH}/rclone /usr/bin
+
 # cleanup
- apk del --purge \
-	build-dependencies && \
- rm -rf \
+RUN \
+  rm -rf \
 	/tmp/* \
 	/var/tmp/* \
 	/var/cache/apk/*
