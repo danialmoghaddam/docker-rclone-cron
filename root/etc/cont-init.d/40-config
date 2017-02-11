@@ -3,10 +3,12 @@
 # create empty config file and bail out, otherwise proceed and setup crond
 if [[ ! -f /config/.rclone.conf ]]; then
   touch /config/.rclone.conf
-  echo "Warning: No rclone config was detected!"
-  echo "Warning: An empty .rclone.conf configurationfile has been placed in the /config path."
-  echo "Warning: Please run this container with the 'config' parameter to configure a destination"
-  echo "Warning: and any encryption settings you may wish to use to protect your synchronized data files."
+  echo "
+  Warning: No rclone config was detected!
+  Warning: An empty .rclone.conf configurationfile has been placed in the /config path.
+  Warning: Please run this container with the 'config' parameter to configure a destination
+  Warning: and any encryption settings you may wish to use to protect your synchronized data files.
+  "
   exit 1
 else
   # replace default crontab with custom if provided

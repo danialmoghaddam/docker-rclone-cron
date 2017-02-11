@@ -15,7 +15,8 @@ RUN \
   apk add --no-cache \
     ca-certificates \
     curl \
-    unzip && \
+    unzip
+    bash && \
   apk add --no-cache --repository http://nl.alpinelinux.org/alpine/edge/community \
     shadow && \
 
