@@ -34,7 +34,7 @@ RUN \
       "http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${PLATFORM_ARCH}.zip" && \
   cd /tmp && \
   unzip /tmp/rclone-binaries.zip && \
-  mv /tmp/rclone-*-linux-${RCLONE_ARCH}/rclone /usr/bin
+  mv /tmp/rclone-*-linux-${PLATFORM_ARCH}/rclone /usr/bin
 
 # cleanup
 RUN \
