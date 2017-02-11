@@ -25,15 +25,15 @@ RUN \
     /tmp/s6-overlay.tar.gz -L \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${PLATFORM_ARCH}.tar.gz" && \
   tar xfz \
-    /tmp/s6-overlay.tar.gz -C / && \
+    /tmp/s6-overlay.tar.gz -C /
 
 # Fetch rclone binaries
 RUN \
   curl -o \
     /tmp/rclone-binaries.zip -L \
       "http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${PLATFORM_ARCH}.zip" && \
-  cd /tmp
-  unzip /tmp/rclone-${RCLONE_VERSION}-linux-${RCLONE_ARCH}.zip && \
+  cd /tmp && \
+  unzip /tmp/rclone-binaries.zip && \
   mv /tmp/rclone-*-linux-${RCLONE_ARCH}/rclone /usr/bin
 
 # cleanup
