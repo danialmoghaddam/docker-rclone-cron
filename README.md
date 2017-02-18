@@ -41,7 +41,7 @@ rclone for Docker - rclone provides a set of commands similar to rsync for worki
 
 ### First run
 ```
-docker run -it -rm \
+docker run -it --rm \
 -e PUID=<host user ID> \
 -e PGID=<host group ID> \
 -e RCLONE_MODE=config
