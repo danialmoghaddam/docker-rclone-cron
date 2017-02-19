@@ -4,15 +4,15 @@
 (
   flock -n 200 || echo "Warning: rclone job is already running" && exit 1
 
-  job_command="rclone --ask-password=false $RCLONE_MODE /data $RCLONE_DESTINATION:/$RCLONE_DESTINATION_SUBPATH"
+  job_command="rclone --ask-password=false --verbose --checksum $RCLONE_MODE /data $RCLONE_DESTINATION:/$RCLONE_DESTINATION_SUBPATH"
 
   if [ "$RCLONE_COMMAND" ]; then
-  job_command="$RCLONE_COMMAND"
-  else
-    if [ -z "$RCLONE_DESTINATION" ]; then
+    job_command="$RCLONE_COMMAND"
+  elif [ -z "$RCLONE_DESTINATION" ]; then
       echo "Error: RCLONE_DESTINATION environment variable was not passed to the container."
       exit 1
-    fi
+  elif [ "$RCLONE_BANDWIDTH" ]; then
+      job_command="rclone --ask-password=false --verbose --checksum --bwlimit $RCLONE_BANDWIDTH $RCLONE_MODE /data $RCLONE_DESTINATION:/$RCLONE_DESTINATION_SUBPATH"
   fi
 
   echo "Info: Executing => $job_command"

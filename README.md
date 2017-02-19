@@ -92,10 +92,11 @@ The container avoids this issue by allowing users to specify an existing Docker 
     $ id <username>
     uid=1000(username) gid=1000(usergroup) groups=1000(usergroup),27(sudo) ... etc
 ```
-* `-e RCLONE_MODE` - Available modes are normally `copy`, `sync` or `config`. **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable** See more available sub-commands at [http://rclone.org/docs/](http://rclone.org/docs/)
+* `-e RCLONE_MODE` - Available modes are normally `copy` or `sync`. **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable** See more available sub-commands at [http://rclone.org/docs/](http://rclone.org/docs/)
 * `-e RCLONE_COMMAND` A custom rclone command which will override the default
 * `-e CRON_SCHEDULE` A custom cron schedule which will override the default value of: 0 * * * * (hourly)
 * `-e RCLONE_CONFIG_PASS` If the `.rclone.conf` configuration file is encrypted, specify the password here
+* `-e RCLONE_BANDWIDTH` Bandwidth to be allocated to the rclone data mover. Specify as a number followed by an extension in bytes, kilobytes or megabytes (per second). Eg. 1G = 1GB/sec, 50M = 50MB/sec, 512K = 512KB/sec, etc. If this value is not set, rclone will utilise whatever bandwidth is available
 * `-e RCLONE_DESTINATION` The destination that the data should be backed up to (must be the same name as specified in .rclone.conf)
 * `-e RCLONE_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destination (the path will be automatically created if it does not exist)
 
@@ -117,4 +118,6 @@ The container avoids this issue by allowing users to specify an existing Docker 
 
 + **2017/02/11:**
   * Initial release and push to Docker Hub
++ **2017/02/19:**
   * Tweaks to README file and first run logic
+  * Added options for bandwidth throttling
