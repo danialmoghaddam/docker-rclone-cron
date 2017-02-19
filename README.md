@@ -124,3 +124,5 @@ The container avoids this issue by allowing users to specify an existing Docker 
 + **2017/02/19:**
   * Tweaks to README file and first run logic
   * Added options for bandwidth throttling
++ **2017/02/20:**
+  * Added verbose logging by default to rclone cron job

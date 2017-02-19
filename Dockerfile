@@ -51,7 +51,8 @@ RUN \
 
 # create some files / folders
 	mkdir -p /config /app /defaults /data && \
-	touch /var/lock/rclone.lock
+	touch /var/lock/rclone.lock && \
+  ln -sf /dev/stderr /var/log/rclone-cron-job.log
 
 # add local files
 COPY root/ /
