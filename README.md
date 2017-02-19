@@ -69,13 +69,15 @@ madcatsu/docker-rclone-cron
 ### Regular Container scheduling
 ```
 docker run --name=<container name> \
--e PUID=<host user ID> \
--e PGID=<host group ID> \
--e RCLONE_MODE=<sync, copy, etc>
--e CRON_SCHEDULE="0/30 * * * *"
--e RCLONE_CONFIG_PASS=<password> ** OPTIONAL **
--e RCLONE_DESTINATION=<rclone destination>
--e RCLONE_DESTINATION_SUBPATH=<rclone destination sub-path> ** OPTIONAL **
+-e PUID="<host user ID>" \
+-e PGID="<host group ID>" \
+-e RCLONE_MODE="<sync, copy, etc>" \
+-e CRON_SCHEDULE="0/30 * * * *" \ ** OPTIONAL **
+-e RCLONE_CONFIG_PASS=""<password>" \ ** OPTIONAL **
+-e RCLONE_DESTINATION="<rclone destination>" \
+-e RCLONE_DESTINATION_SUBPATH="<rclone destination sub-path>" \ ** OPTIONAL **
+-e RCLONE_BANDWIDTH="<bandwidth value>" \
+-e JOB_SUCCESS_URL="<healthcheck API endpoint>"
 -v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \
@@ -99,6 +101,7 @@ The container avoids this issue by allowing users to specify an existing Docker 
 * `-e RCLONE_BANDWIDTH` Bandwidth to be allocated to the rclone data mover. Specify as a number followed by an extension in bytes, kilobytes or megabytes (per second). Eg. 1G = 1GB/sec, 50M = 50MB/sec, 512K = 512KB/sec, etc. If this value is not set, rclone will utilise whatever bandwidth is available
 * `-e RCLONE_DESTINATION` The destination that the data should be backed up to (must be the same name as specified in .rclone.conf)
 * `-e RCLONE_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destination (the path will be automatically created if it does not exist)
+* `-e JOB_SUCCESS_URL` At the end of each rclone cron job, report to a healthcheck API endpoint at a defined web URI
 
 ### Bind mounts
 
