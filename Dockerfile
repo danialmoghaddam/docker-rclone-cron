@@ -57,3 +57,5 @@ RUN \
 COPY root/ /
 
 VOLUME ["/config"]
+
+ENTRYPOINT ["/init"]
