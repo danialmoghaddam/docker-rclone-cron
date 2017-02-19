@@ -49,10 +49,10 @@ RUN \
 	useradd -u 911 -U -d /config -s /bin/false abc && \
 	usermod -G users abc && \
 
-# create some files / folders
+# create some files / folders and symlink verbose job logs to PID 1 stderr
 	mkdir -p /config /app /defaults /data && \
 	touch /var/lock/rclone.lock && \
-  ln -sf /dev/stderr /var/log/rclone-cron-job.log
+  ln -sf /proc/1/fd/2 /var/log/rclone-cron-job.log
 
 # add local files
 COPY root/ /
