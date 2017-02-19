@@ -44,19 +44,22 @@ rclone for Docker - rclone provides a set of commands similar to rsync for worki
 docker run -it --rm \
 -e PUID=<host user ID> \
 -e PGID=<host group ID> \
--e RCLONE_MODE=config
--v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \
-madcatsu/docker-rclone-cron
+madcatsu/docker-rclone-cron \
+rclone --config=/config/.rclone.conf config
 ```
 
 ### Custom rclone job
+_You will need to specify the full rclone command in the format 'rclone <operation> source destination' if you elect to use this environment variable_
+
+_Be mindful that the container will not terminate when your custom command completes as the s6-overlay acts as a supervisor for the cron daemon, which will keep running your custom rclone command with the default hourly schedule_
+
 ```
 docker run --name=<container name> \
 -e PUID=<host user ID> \
 -e PGID=<host group ID> \
--e RCLONE_COMMAND=
+-e RCLONE_COMMAND=<your custom rclone command>
 -v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \
@@ -100,6 +103,7 @@ The container avoids this issue by allowing users to specify an existing Docker 
 
 * `-v /config` The path where the .rclone.conf file is
 * `-v /data` The path to the data which should be backed up by Rclone
+* `-v /etc/localtime:/etc/localtime:ro` Will capture the local host system time for log output. If you prefer UTC output, you can skip this bind mount
 
 ### Info
 
@@ -113,3 +117,4 @@ The container avoids this issue by allowing users to specify an existing Docker 
 
 + **2017/02/11:**
   * Initial release and push to Docker Hub
+  * Tweaks to README file and first run logic

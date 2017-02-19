@@ -5,20 +5,20 @@ if [[ ! -f /config/.rclone.conf ]]; then
   touch /config/.rclone.conf
   echo "
   Warning: No rclone config was detected!
-  Warning: An empty .rclone.conf configurationfile has been placed in the /config path.
+  Warning: An empty .rclone.conf configuration file has been placed in the /config path.
   Warning: Please run this container with the 'config' parameter to configure a destination
   Warning: and any encryption settings you may wish to use to protect your synchronized data files.
   "
-  exit 1
-else
-  # replace default crontab with custom if provided
-  if [[ -n "$CRON_SCHEDULE" ]]; then
-    sed -i -e 's|0 \* \* \* \*|'"$CRON_SCHEDULE"'|g' /defaults/rclone.cron
-  fi
-  echo "Info: crontab => $(cat /defaults/rclone.cron)"
-  # set crontab for our user
-  crontab -u abc /defaults/rclone.cron
 fi
+
+# replace default crontab with custom if provided
+if [[ -n "$CRON_SCHEDULE" ]]; then
+  sed -i -e 's|0 \* \* \* \*|'"$CRON_SCHEDULE"'|g' /defaults/rclone.cron
+  echo "Info: crontab => $(cat /defaults/rclone.cron)"
+fi
+
+# set crontab for our user
+crontab -u abc /defaults/rclone.cron
 
 # set permissions
 chown -R abc:abc \
@@ -26,6 +26,6 @@ chown -R abc:abc \
 chown abc:abc \
 	/config/.rclone.conf
 chmod +x \
-	/app/rclone-job.sh \
+	/app/rclone-cron-job.sh \
 chmod 777 \
 	/var/lock
