@@ -1,6 +1,6 @@
 ![Rclone Logo](http://rclone.org/img/rclone-120x120.png)
 
-This is an Unofficial Docker container for rclone based on freely available Linux (x64) binaries at [http://rclone.org/downloads/](http://rclone.org/downloads/) and forked from tynor88's original project @ [https://github.com/tynor88/docker-rclone](https://github.com/tynor88/docker-rclone)
+This is an Unofficial Docker container for rclone based on freely available Linux (x64) binaries at [http://rclone.org/downloads/](http://rclone.org/downloads/) and forked from **tynor88's** original project @ [https://github.com/tynor88/docker-rclone](https://github.com/tynor88/docker-rclone)
 
 # madcatsu/docker-rclone-cron
 

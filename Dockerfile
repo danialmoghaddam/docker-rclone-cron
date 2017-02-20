@@ -1,15 +1,28 @@
 FROM alpine
 
 # Set
-LABEL attribution.author="tynor88" \
-      attribution.git.source.repository="https://github.com/tynor88/docker-rclone" \
-      attribution.git.status="forked" \
-      license="GNU General Public License Version 3" \
-      maintainer="madcatsu" \
-      maintainer.contact.email="develop@rowangillson.info" \
-      maintainer.contact.twiter="@shinydroid" \
-      version="0.9"
+LABEL org.label-schema.name="docker-rclone-cron" \
+      org.label-schema.description="Docker containerized version of the rclone utility for Linux" \
+      org.label-schema.usage="https://github.com/madcatsu/docker-rclone-cron/blob/master/README.md" \
+      org.label-schema.url="https://github.com/madcatsu/docker-rclone-cron" \
+      org.label-schema.vcs-url="https://github.com/madcatsu/docker-rclone-cron" \
+      org.label-schema.version="0.9.0" \
+      org.label-schema.schema-version="1.0"
 
+LABEL source.attribution.maintainer="tynor88" \
+      source.attribution.author="tynor88" \
+      source.attribution.contact.email="tynor@hotmail.com" \
+      source.attribution.vcs.repository="https://github.com/tynor88/docker-rclone" \
+      source.attribution.vcs.branch="master" \
+      source.attribution.vcs.version="Unknown" \
+      source.attribution.license="GNU General Public License Version 3" \
+      source.attribution.vcs.status="forked" \
+      fork.maintainer="madcatsu" \
+      fork.maintainer.author="Rowan Gillson" \
+      fork.maintainer.contact.email="develop@rowangillson.info" \
+      fork.maintainer.vcs.repository="https://github.com/madcatsu/docker-rclone-cron" \
+      fork.maintainer.vcs.branch="master" \
+      fork.maintainer.vcs.version="0.9.0"
 
 # global environment settings
 ENV OVERLAY_VERSION="v1.19.1.1"
