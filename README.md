@@ -1,6 +1,6 @@
 ![Rclone Logo](http://rclone.org/img/rclone-120x120.png)
 
-This is an Unofficial Docker container for rclone based on freely available Linux (x64) binaries at [http://rclone.org/downloads/](http://rclone.org/downloads/)
+This is an Unofficial Docker container for rclone based on freely available Linux (x64) binaries at [http://rclone.org/downloads/](http://rclone.org/downloads/) and forked from tynor88's original project @ [https://github.com/tynor88/docker-rclone](https://github.com/tynor88/docker-rclone)
 
 # madcatsu/docker-rclone-cron
 
@@ -68,7 +68,7 @@ madcatsu/docker-rclone-cron
 
 ### Regular Container scheduling
 ```
-docker run --name=<container name> \
+docker run -d --name=<container name> \
 -e PUID="<host user ID>" \
 -e PGID="<host group ID>" \
 -e RCLONE_MODE="<sync, copy, etc>" \
@@ -95,13 +95,13 @@ The container avoids this issue by allowing users to specify an existing Docker 
     uid=1000(username) gid=1000(usergroup) groups=1000(usergroup),27(sudo) ... etc
 ```
 * `-e RCLONE_MODE` - Available modes are normally `copy` or `sync`. **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable** See more available sub-commands at [http://rclone.org/docs/](http://rclone.org/docs/)
-* `-e RCLONE_COMMAND` A custom rclone command which will override the default
+* `-e RCLONE_COMMAND` A custom rclone command which will override the default job
 * `-e CRON_SCHEDULE` A custom cron schedule which will override the default value of: 0 * * * * (hourly)
 * `-e RCLONE_CONFIG_PASS` If the `.rclone.conf` configuration file is encrypted, specify the password here
 * `-e RCLONE_BANDWIDTH` Bandwidth to be allocated to the rclone data mover. Specify as a number followed by an extension in bytes, kilobytes or megabytes (per second). Eg. 1G = 1GB/sec, 50M = 50MB/sec, 512K = 512KB/sec, etc. If this value is not set, rclone will utilise whatever bandwidth is available
-* `-e RCLONE_DESTINATION` The destination that the data should be backed up to (must be the same name as specified in .rclone.conf)
-* `-e RCLONE_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destination (the path will be automatically created if it does not exist)
-* `-e JOB_SUCCESS_URL` At the end of each rclone cron job, report to a healthcheck API endpoint at a defined web URI
+* `-e RCLONE_DESTINATION` The destination that the data should be backed up to (must be the same name as specified in .rclone.conf). **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
+* `-e RCLONE_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destination (the path will be automatically created if it does not exist). **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
+* `-e JOB_SUCCESS_URL` At the end of each rclone cron job, report to a healthcheck API endpoint at a defined web URI (eg. WDT.io or Healthchecks.io)
 
 ### Bind mounts
 
@@ -113,6 +113,7 @@ The container avoids this issue by allowing users to specify an existing Docker 
 
 * Shell access whilst the container is running: docker exec -it <container name / ID> /bin/bash
 * To monitor the logs of the container in realtime: docker logs -f <container name / ID>
+* When running a custom rclone job via the `RCLONE_COMMAND` environment variable, using `--verbose --log-file=/var/log/rclone-cron-job.log` will provide a way to view job output with the above "docker logs" command
 
 ### Known Issues
 + `rclone mount` is not available and will fail / crash rclone if used within the container as the Fuse binaries/libraries are not included in the container image. FUSE is known to have issues with bind mounted paths inside a container and requires access to kernel on the host

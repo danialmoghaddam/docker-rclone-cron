@@ -1,5 +1,15 @@
 FROM alpine
-MAINTAINER madcatsu
+
+# Set
+LABEL attribution.author="tynor88" \
+      attribution.git.source.repository="https://github.com/tynor88/docker-rclone" \
+      attribution.git.status="forked" \
+      license="GNU General Public License Version 3" \
+      maintainer="madcatsu" \
+      maintainer.contact.email="develop@rowangillson.info" \
+      maintainer.contact.twiter="@shinydroid" \
+      version="0.9"
+
 
 # global environment settings
 ENV OVERLAY_VERSION="v1.19.1.1"
