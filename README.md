@@ -74,10 +74,10 @@ docker run -d --name=<container name> \
 -e RCLONE_MODE="<sync, copy, etc>" \
 -e CRON_SCHEDULE="0/30 * * * *" \ ** OPTIONAL **
 -e RCLONE_CONFIG_PASS=""<password>" \ ** OPTIONAL **
+-e RCLONE_SOURCE="<rclone source>" \
 -e RCLONE_DESTINATION="<rclone destination>" \
--e RCLONE_DESTINATION_SUBPATH="<rclone destination sub-path>" \ ** OPTIONAL **
 -e RCLONE_BANDWIDTH="<bandwidth value>" \
--e JOB_SUCCESS_URL="<healthcheck API endpoint>"
+-e JOB_SUCCESS_URL="<healthcheck API endpoint>" ** OPTIONAL **
 -v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \
@@ -99,15 +99,21 @@ The container avoids this issue by allowing users to specify an existing Docker 
 * `-e CRON_SCHEDULE` A custom cron schedule which will override the default value of: 0 * * * * (hourly)
 * `-e RCLONE_CONFIG_PASS` If the `.rclone.conf` configuration file is encrypted, specify the password here
 * `-e RCLONE_BANDWIDTH` Bandwidth to be allocated to the rclone data mover. Specify as a number followed by an extension in bytes, kilobytes or megabytes (per second). Eg. 1G = 1GB/sec, 50M = 50MB/sec, 512K = 512KB/sec, etc. If this value is not set, rclone will utilise whatever bandwidth is available
-* `-e RCLONE_DESTINATION` The destination that the data should be backed up to (must be the same name as specified in .rclone.conf). **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
-* `-e RCLONE_DESTINATION_SUBPATH` If the data should be backed up to a subpath on the destination (the path will be automatically created if it does not exist). **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
+* `-e RCLONE_SOURCE` The source for data that should be backed up. Must match either `/data` for data being pushed to a remote location, or the name of the remote specified in .rclone.conf if data is being pulled from the remote specified in .rclone.conf **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
+* `-e RCLONE_DESTINATION` The destination that the data should be backed up to. Must match either `/data` for data being pulled from a remote location, or the name of the remote specified in .rclone.conf **This parameter is mandatory unless you specify the RCLONE_COMMAND environment variable**
 * `-e JOB_SUCCESS_URL` At the end of each rclone cron job, report to a healthcheck API endpoint at a defined web URI (eg. WDT.io or Healthchecks.io)
+
+#### RCLONE_SOURCE and RCLONE_DESTINATION usage
+As rclone allows data to be uploaded to a pre-defined remote, or downloaded from the same, the `RCLONE_SOURCE` and `RCLONE_DESTINATION` environment variables can be used interchangeably. In either form, one of these variables must be specified as "/data" as this path is bind mounted to the Docker container with access to the host file system. To demonstrate, both a push and pull scenario are further outlined:
+
+* **Uploading local data to remote cloud storage:** In this form, `RCLONE_SOURCE` should be passed to the container with the value of "/data" (without the literal quotes). The `RCLONE_DESTINATION` variable should take the form of "<remote name>:/<sub-path>". Eg. `RCLONE_DESTINATION="Amazon-Cloud-Drive:/Backups"`
+* **Downloading data from remote cloud storage:** In this form, `RCLONE_SOURCE` and `RCLONE_DESTINATION` variables in the previous example should be swapped. Thus, `RCLONE_SOURCE="Amazon-Cloud-Drive:/Backups"`.
 
 ### Bind mounts
 
-* `-v /config` The path where the .rclone.conf file is
-* `-v /data` The path to the data which should be backed up by Rclone
-* `-v /etc/localtime:/etc/localtime:ro` Will capture the local host system time for log output. If you prefer UTC output, you can skip this bind mount
+* `-v </path/to/your/persistent/config/folder>:/config` The path where the .rclone.conf file is stored
+* `-v </path/to/your/data/folder/>:/data` The path which rclone should use for backup or restore operations
+* `-v /etc/localtime:/etc/localtime:ro` Will capture the local host system time for log output. _If you prefer UTC output, you can skip this bind mount_
 
 ### Info
 
@@ -127,3 +133,4 @@ The container avoids this issue by allowing users to specify an existing Docker 
   * Added options for bandwidth throttling
 + **2017/02/20:**
   * Added verbose logging by default to rclone cron job
+  * Changed environment vars to allow both upload and download jobs

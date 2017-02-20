@@ -25,7 +25,7 @@ LABEL source.attribution.maintainer="tynor88" \
       fork.maintainer.vcs.version="0.9.0"
 
 # global environment settings
-ENV OVERLAY_VERSION="v1.19.1.1"
+ARG OVERLAY_VERSION="v1.19.1.1"
 ENV RCLONE_VERSION="current"
 ENV PLATFORM_ARCH="amd64"
 # s6 environment settings
