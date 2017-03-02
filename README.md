@@ -43,7 +43,7 @@ rclone for Docker - rclone provides a set of commands similar to rsync for worki
 ```
 docker run -it --rm \
 -e PUID=<host user ID> \
--e PGID=<host group ID> \
+-e PGID=<host user group ID> \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \
 madcatsu/docker-rclone-cron \
@@ -58,7 +58,7 @@ _Be mindful that the container will not terminate when your custom command compl
 ```
 docker run --name=<container name> \
 -e PUID=<host user ID> \
--e PGID=<host group ID> \
+-e PGID=<host user group ID> \
 -e RCLONE_COMMAND=<your custom rclone command>
 -v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
@@ -70,7 +70,7 @@ madcatsu/docker-rclone-cron
 ```
 docker run -d --name=<container name> \
 -e PUID="<host user ID>" \
--e PGID="<host group ID>" \
+-e PGID="<host user group ID>" \
 -e RCLONE_MODE="<sync, copy, etc>" \
 -e CRON_SCHEDULE="0/30 * * * *" \ ** OPTIONAL **
 -e RCLONE_CONFIG_PASS=""<password>" \ ** OPTIONAL **

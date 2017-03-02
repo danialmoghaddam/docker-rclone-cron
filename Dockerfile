@@ -1,6 +1,6 @@
 FROM alpine
 
-# Set
+# Set label metadata
 LABEL org.label-schema.name="docker-rclone-cron" \
       org.label-schema.description="Docker containerized version of the rclone utility for Linux" \
       org.label-schema.usage="https://github.com/madcatsu/docker-rclone-cron/blob/master/README.md" \

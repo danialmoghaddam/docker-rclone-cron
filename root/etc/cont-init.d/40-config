@@ -26,6 +26,7 @@ chown -R abc:abc \
 chown abc:abc \
 	/config/.rclone.conf
 chmod +x \
-	/app/rclone-cron-job.sh
+	/app/rclone-cron-job.sh \
+  /var/log/rclone-cron-job.log
 chmod 777 \
 	/var/lock
