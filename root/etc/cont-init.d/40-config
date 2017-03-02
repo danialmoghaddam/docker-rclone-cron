@@ -24,9 +24,11 @@ crontab -u abc /defaults/rclone.cron
 chown -R abc:abc \
 	/app
 chown abc:abc \
-	/config/.rclone.conf
+	/config/.rclone.conf \
+  /var/log/rclone-cron-job.log
 chmod +x \
 	/app/rclone-cron-job.sh \
+chmod +w \
   /var/log/rclone-cron-job.log
 chmod 777 \
 	/var/lock

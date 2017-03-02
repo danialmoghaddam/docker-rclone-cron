@@ -2,7 +2,8 @@
 
 # Run rclone only if the previous cron job finished
 (
-  flock -n 200 || echo "Warning: rclone job is already running" >> /var/log/rclone-cron-job.log && exit 1
+  flock -n 200 || exit 1
+#  flock -n 200 || echo "Warning: rclone job is already running" >> /var/log/rclone-cron-job.log && exit 1
 
   # Setup a basic rclone command
   job_command="rclone --ask-password=false --verbose --log-file=/var/log/rclone-cron-job.log --checksum $RCLONE_MODE $RCLONE_SOURCE $RCLONE_DESTINATION"
