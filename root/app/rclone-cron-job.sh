@@ -6,7 +6,7 @@
   flock -n 200 || echo "Warning: rclone job is already running" && exit 1
 
   # Setup a basic rclone command
-  job_command="rclone --ask-password=false --verbose --checksum $RCLONE_MODE $RCLONE_SOURCE $RCLONE_DESTINATION"
+  job_command="rclone --ask-password=false --config=/config/.rclone.conf --verbose --checksum $RCLONE_MODE $RCLONE_SOURCE $RCLONE_DESTINATION"
 
   # Check if the container is running a customer rclone command, otherwise,
   # ensure a mode, source and destination are provided. If not, bail out.
@@ -20,7 +20,7 @@
       echo "Error: Source or Destination options for rclone were not passed to the container."
       exit 1
     elif [ "$RCLONE_BANDWIDTH" ]; then
-      job_command="rclone --ask-password=false --verbose --checksum --bwlimit $RCLONE_BANDWIDTH $RCLONE_MODE $RCLONE_SOURCE $RCLONE_DESTINATION"
+      job_command="rclone --ask-password=false --config=/config/.rclone.conf --verbose --checksum --bwlimit $RCLONE_BANDWIDTH $RCLONE_MODE $RCLONE_SOURCE $RCLONE_DESTINATION"
     fi
   fi
 
