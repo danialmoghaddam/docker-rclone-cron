@@ -20,15 +20,11 @@ fi
 # set crontab for our user
 crontab -u abc /defaults/rclone.cron
 
-# create symlink to PID1 stdout
-ln -sf /proc/1/fd/2 /var/log/rclone-cron-job.log
-
 # set permissions
 chown -R abc:abc \
 	/app
 chown abc:abc \
-	/config/.rclone.conf \
-  /var/log/rclone-cron-job.log
+	/config/.rclone.conf
 chmod +x \
 	/app/rclone-cron-job.sh
 chmod 777 \
