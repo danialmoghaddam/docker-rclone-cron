@@ -31,5 +31,4 @@
     echo "Info: Reporting job success to Healtcheck.io" >> /var/log/rclone-cron-job.log
     curl --retry 3 $JOB_SUCCESS_URL
   fi
-)
-  200>/var/lock/rclone.lock
+) 200>/var/lock/rclone.lock
