@@ -74,8 +74,7 @@ RUN \
 
 # create some files / folders and symlink verbose job logs to PID 1 stderr
 	mkdir -p /config /app /defaults /data && \
-	touch /var/lock/rclone.lock && \
-  ln -sf /proc/1/fd/2 /var/log/rclone-cron-job.log
+	touch /var/lock/rclone.lock
 
 # add local files
 COPY root/ /
