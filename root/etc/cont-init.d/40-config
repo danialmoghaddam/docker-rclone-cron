@@ -13,8 +13,11 @@ fi
 
 # replace default crontab with custom if provided
 if [[ -n "$CRON_SCHEDULE" ]]; then
-  sed -i -e 's|0 \* \* \* \*|'"$CRON_SCHEDULE"'|g' /defaults/rclone.cron
+  printf "$CRON_SCHEDULE /app/rclone-cron-job.sh" > /defaults/rclone.cron
   echo "Info: crontab => $(cat /defaults/rclone.cron)"
+else
+  printf "0 * * * * /app/rclone-cron-job.sh"/defaults/rclone.cron
+  echo "Info: Using default hourly cron => $(cat /defaults/rclone.cron)"
 fi
 
 # set crontab for our user
