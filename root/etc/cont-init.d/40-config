@@ -13,10 +13,10 @@ fi
 
 # replace default crontab with custom if provided
 if [[ -n "$CRON_SCHEDULE" ]]; then
-  printf "$CRON_SCHEDULE /app/rclone-cron-job.sh" > /defaults/rclone.cron
+  printf "$CRON_SCHEDULE /apps/rclone-cron-job.sh\n" > /defaults/rclone.cron
   echo "Info: crontab => $(cat /defaults/rclone.cron)"
 else
-  printf "0 * * * * /app/rclone-cron-job.sh"/defaults/rclone.cron
+  printf "0 * * * * /apps/rclone-cron-job.sh\n"/defaults/rclone.cron
   echo "Info: Using default hourly cron => $(cat /defaults/rclone.cron)"
 fi
 
@@ -25,10 +25,10 @@ crontab -u abc /defaults/rclone.cron
 
 # set permissions
 chown -R abc:abc \
-	/app
+	/apps
 chown abc:abc \
 	/config/.rclone.conf
 chmod +x \
-	/app/rclone-cron-job.sh
+	/apps/rclone-cron-job.sh
 chmod 777 \
 	/var/lock

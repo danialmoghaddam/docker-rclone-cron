@@ -13,8 +13,9 @@ Info: User uid:    $(id -u abc)
 Info: User gid:    $(id -g abc)
 Info: -------------------------------------
 "
-chown abc:abc \
-	/app \
-	/config \
-	/defaults \
-	/var/lock/rclone.lock
+
+chown abc:abc /apps
+chown abc:abc /config
+chown abc:abc /defaults
+chown abc:abc /data
+chown abc:abc	/var/lock/rclone.lock

@@ -28,7 +28,7 @@
   eval "$job_command"
 
   if [ "$JOB_SUCCESS_URL" ]; then
-    echo "Info: Reporting job success to Healtcheck.io"
+    echo "Info: Reporting job success to health check endpoint"
     curl --retry 3 $JOB_SUCCESS_URL
   fi
 ) 200>/var/lock/rclone.lock

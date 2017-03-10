@@ -72,8 +72,8 @@ RUN \
 	useradd -u 911 -U -d /config -s /bin/false abc && \
 	usermod -G users abc && \
 
-# create some files / folders and symlink verbose job logs to PID 1 stderr
-	mkdir -p /config /app /defaults /data && \
+# create some files / folders for data placement
+	mkdir -p /apps /config /defaults /data && \
 	touch /var/lock/rclone.lock
 
 # add local files
