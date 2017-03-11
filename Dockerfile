@@ -48,7 +48,7 @@ RUN \
     /tmp/s6-overlay.tar.gz -L \
     "https://github.com/just-containers/s6-overlay/releases/download/${OVERLAY_VERSION}/s6-overlay-${PLATFORM_ARCH}.tar.gz" && \
   tar xfz \
-    /tmp/s6-overlay.tar.gz -C /
+    /tmp/s6-overlay.tar.gz -C / && \
 
 # Create user for container to host mapping
   groupmod -g 1000 users && \
