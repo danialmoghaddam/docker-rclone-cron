@@ -1,5 +1,22 @@
 #!/usr/bin/with-contenv sh
 
+function setperms {
+# Set ownership of config files and permissions of Caddy binary
+chown -R abc:abc \
+  /apps \
+  /config \
+  /data \
+  /defaults
+
+chmod 0755 \
+  /etc/services.d/*/* \
+  /apps/rclone-cron-job.sh
+
+chmod 777 \
+  /var/lock
+}
+
+
 # create empty config file and bail out, otherwise proceed and setup crond
 if [[ ! -f /config/.rclone.conf ]]; then
   touch /config/.rclone.conf
@@ -24,11 +41,4 @@ fi
 crontab -u abc /defaults/rclone.cron
 
 # set permissions
-chown -R abc:abc \
-	/apps
-chown abc:abc \
-	/config/.rclone.conf
-chmod +x \
-	/apps/rclone-cron-job.sh
-chmod 777 \
-	/var/lock
+setperms

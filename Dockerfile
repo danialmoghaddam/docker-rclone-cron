@@ -50,31 +50,34 @@ RUN \
   tar xfz \
     /tmp/s6-overlay.tar.gz -C /
 
+# Create user for container to host mapping
+  groupmod -g 1000 users && \
+  useradd -u 911 -U -d /config -s /bin/false abc && \
+  usermod -G users abc && \
+
+# Create container user and directory structure
+  mkdir -p \
+    /apps \
+    /config \
+    /defaults \
+    /data && \
+
 # Fetch rclone binaries
-RUN \
   curl -o \
     /tmp/rclone-binaries.zip -L \
       "http://downloads.rclone.org/rclone-${RCLONE_VERSION}-linux-${PLATFORM_ARCH}.zip" && \
   cd /tmp && \
   unzip /tmp/rclone-binaries.zip && \
-  mv /tmp/rclone-*-linux-${PLATFORM_ARCH}/rclone /usr/bin
+  mv /tmp/rclone-*-linux-${PLATFORM_ARCH}/rclone /usr/bin && \
+
+# Prep rclone job lockfile
+  touch /var/lock/rclone.lock && \
 
 # cleanup
-RUN \
   rm -rf \
-	/tmp/* \
-	/var/tmp/* \
-	/var/cache/apk/*
-
-# create abc user
-RUN \
-	groupmod -g 1000 users && \
-	useradd -u 911 -U -d /config -s /bin/false abc && \
-	usermod -G users abc && \
-
-# create some files / folders for data placement
-	mkdir -p /apps /config /defaults /data && \
-	touch /var/lock/rclone.lock
+	  /tmp/* \
+	  /var/tmp/* \
+	  /var/cache/apk/*
 
 # add local files
 COPY root/ /
