@@ -78,6 +78,7 @@ docker run -d --name=<container name> \
 -e RCLONE_DESTINATION="<rclone destination>" \
 -e RCLONE_BANDWIDTH="<bandwidth value>" \
 -e JOB_SUCCESS_URL="<healthcheck API endpoint>" ** OPTIONAL **
+-e JOB_NOTIFY_URL="<notification API endpoint>" ** OPTIONAL **
 -v /etc/localtime:/etc/localtime:ro \
 -v </path/to/your/persistent/config/folder>:/config \
 -v </path/to/your/data/folder/>:/data \

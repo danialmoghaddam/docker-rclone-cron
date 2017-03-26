@@ -31,4 +31,10 @@
     echo "Info: Reporting job success to health check endpoint"
     curl --retry 3 $JOB_SUCCESS_URL
   fi
+  
+  if [ "$JOB_NOTIFY_URL" ]; then
+    echo "Info: Reporting job done to notification url"
+    curl --retry 3 $JOB_NOTIFY_URL
+  fi
+  
 ) 200>/var/lock/rclone.lock
