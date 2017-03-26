@@ -5,9 +5,11 @@ function setperms {
 chown -R abc:abc \
   /apps \
   /config \
-  /data \
   /defaults
-
+  
+chown abc:abc \
+	/data
+    
 chmod 0755 \
   /etc/services.d/*/* \
   /apps/rclone-cron-job.sh
