@@ -17,5 +17,11 @@ Info: -------------------------------------
 chown abc:abc /apps
 chown abc:abc /config
 chown abc:abc /defaults
-chown abc:abc /data
-chown abc:abc	/var/lock/rclone.lock
+#chown abc:abc /data
+chown abc:abc /var/lock/rclone.lock
+
+cat /config/directories.txt | while read line
+do
+   # do something with $line here
+   chown abc:abc /data/$line
+done

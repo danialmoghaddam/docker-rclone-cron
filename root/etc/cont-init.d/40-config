@@ -6,10 +6,15 @@ chown -R abc:abc \
   /apps \
   /config \
   /defaults
-  
-chown abc:abc \
-	/data
     
+cat /config/directories.txt | while read line
+do
+   # do something with $line here
+   chown -R abc:abc \
+	/data/$line
+done
+done
+
 chmod 0755 \
   /etc/services.d/*/* \
   /apps/rclone-cron-job.sh
